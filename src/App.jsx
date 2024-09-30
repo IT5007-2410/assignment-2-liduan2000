@@ -55,22 +55,89 @@ function Display(props) {
 }
 
 class Add extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      phone: '',
+    };
+
+    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(e) {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
   }
 
   handleSubmit(e) {
     e.preventDefault();
     /*Q4. Fetch the passenger details from the add form and call bookTraveller()*/
+    const { name, phone, email } = this.state;
+
+    const newTraveller = {
+      id: Date.now(),
+      name,
+      phone,
+      email,
+      bookingTime: new Date(),
+    };
+
+    this.props.bookTraveller(newTraveller);
+
+    this.setState({
+      name: '',
+      phone: '',
+      email: '',
+    });
   }
 
   render() {
+    const { name, phone, email } = this.state;
+
     return (
-      <form name="addTraveller" onSubmit={this.handleSubmit}>
-	    {/*Q4. Placeholder to enter passenger details. Below code is just an example.*/}
-        <input type="text" name="travellername" placeholder="Name" />
-        <button>Add</button>
+      <form name="addTraveller" onSubmit={this.handleSubmit} style={styles.form}>
+        {/*Q4. Placeholder to enter passenger details. Below code is just an example.*/}
+        <label style={styles.label}>
+          Name:
+          <input
+            type="text"
+            name="name"
+            value={name}
+            onChange={this.handleChange}
+            placeholder="Enter name"
+            required
+            style={styles.input}
+          />
+        </label>
+        <br />
+        <label style={styles.label}>
+          Phone:
+          <input
+            type="text"
+            name="phone"
+            value={phone}
+            onChange={this.handleChange}
+            placeholder="Enter phone number"
+            required
+            style={styles.input}
+          />
+        </label>
+        <label style={styles.label}>
+          Email:
+          <input
+            type="text"
+            name="email"
+            value={email}
+            onChange={this.handleChange}
+            placeholder="Enter email"
+            required
+            style={styles.input}
+          />
+        </label>
+        <br />
+        <button type="submit" style={styles.button}>Add Traveller</button>
       </form>
     );
   }
@@ -175,6 +242,7 @@ class TicketToRide extends React.Component {
           {this.state.selector === 2 && <Display travellers={this.state.travellers} />}
           
           {/*Q4. Code to call the component that adds a traveller.*/}
+          {this.state.selector === 3 && <Add bookTraveller={this.bookTraveller} />}
           {/*Q5. Code to call the component that deletes a traveller based on a given attribute.*/}
         </div>
       </div>
