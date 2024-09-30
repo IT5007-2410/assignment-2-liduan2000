@@ -265,6 +265,11 @@ class TicketToRide extends React.Component {
           alert("Phone number must be numeric!");
           return null;
         }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(passenger.email)) {
+          alert("Invalid email!");
+          return null;
+        }
         alert("Traveller added successfully!");
         return {
           travellers: [...prevState.travellers, passenger],
