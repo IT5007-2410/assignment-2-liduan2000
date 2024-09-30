@@ -320,6 +320,119 @@ class TicketToRide extends React.Component {
   }
 }
 
+const styles = {
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: '20px',
+  },
+  title: {
+    marginBottom: '10px',
+    color: '#333',
+    fontSize: '2em',
+    textAlign: 'center',
+  },
+  navbar: {
+    display: 'flex',
+    justifyContent: 'center',
+    gap: '10px',
+  },
+  navButton: {
+    backgroundColor: '#007bff',
+    color: 'white',
+    border: 'none',
+    padding: '10px 20px',
+    fontSize: '16px',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s ease',
+  },
+  seatContainer: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(5, 40px)', // 5 seats per row, adjust as needed
+    gap: '10px',
+  },
+  seat: {
+    width: '40px',
+    height: '40px',
+    borderRadius: '5px',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', // Light shadow for visual depth
+  },
+  table: {
+    width: '100%',
+    borderCollapse: 'collapse',
+    marginBottom: '20px',
+    fontFamily: 'Arial, sans-serif',
+    backgroundColor: '#f8f9fa',  // Light grey background for table
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',  // Light shadow for depth
+  },
+  th: {
+    backgroundColor: '#007bff',  // Bootstrap blue for table header
+    color: 'white',
+    padding: '10px',
+    textAlign: 'left',
+    borderBottom: '2px solid #ddd',
+  },
+  td: {
+    padding: '10px',
+    textAlign: 'left',
+    borderBottom: '1px solid #ddd',  // Subtle border between rows
+  },
+  tr: {
+    transition: 'background-color 0.2s ease',  // Smooth hover effect
+  },
+  trHover: {
+    backgroundColor: '#f1f1f1',  // Light grey background on hover
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: '#f8f9fa', // Light grey background
+    padding: '20px',
+    borderRadius: '10px',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // Light shadow for depth
+    width: '300px',
+    margin: '20px auto',
+  },
+  label: {
+    marginBottom: '10px',
+    fontWeight: 'bold',
+    color: '#333', // Darker font color
+    display: 'block',
+    width: '100%',
+    textAlign: 'left',
+  },
+  input: {
+    width: '100%',
+    padding: '10px',
+    marginTop: '5px',
+    borderRadius: '5px',
+    border: '1px solid #ddd',
+    fontSize: '16px',
+    boxSizing: 'border-box',
+    outline: 'none',
+    transition: 'border-color 0.3s',
+  },
+  inputFocus: {
+    borderColor: '#007bff', // Change border color on focus
+  },
+  button: {
+    backgroundColor: '#007bff',
+    color: 'white',
+    padding: '10px 20px',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s ease',
+    fontSize: '16px',
+    width: '100%',
+    marginTop: '20px',
+  },
+};
+
 const element = <TicketToRide />;
 
 ReactDOM.render(element, document.getElementById('contents'));
