@@ -12,33 +12,45 @@ const initialTravellers = [
 
 
 function TravellerRow(props) {
+  const { traveller } = props;
   {/*Q3. Placeholder to initialize local variable based on traveller prop.*/}
   return (
-    <tr>
-	  {/*Q3. Placeholder for rendering one row of a table with required traveller attribute values.*/}
+    <tr style={styles.tr}>
+      {/*Q3. Placeholder for rendering one row of a table with required traveller attribute values.*/}
+      <td style={styles.td}>{traveller.id}</td>
+      <td style={styles.td}>{traveller.name}</td>
+      <td style={styles.td}>{traveller.phone}</td>
+      <td style={styles.td}>{traveller.email}</td>
+      <td style={styles.td}>{new Date(traveller.bookingTime).toLocaleString()}</td>
     </tr>
   );
 }
 
 function Display(props) {
-  
-	/*Q3. Write code to render rows of table, reach corresponding to one traveller. Make use of the TravellerRow function that draws one row.*/
-
+  const { travellers } = props;
+    /*Q3. Write code to render rows of table, reach corresponding to one traveller. Make use of the TravellerRow function that draws one row.*/
   return (
-    <table className="bordered-table">
-      <thead>
-        <tr>
-	  {/*Q3. Below table is just an example. Add more columns based on the traveller attributes you choose.*/}
-          <th>ID</th>
-          <th>Name</th>
-          <th>Phone</th>
-          <th>Booking Time</th>
-        </tr>
-      </thead>
-      <tbody>
-        {/*Q3. write code to call the JS variable defined at the top of this function to render table rows.*/}
-      </tbody>
-    </table>
+    <div>
+      <br></br>
+      <table style={styles.table}>
+        <thead>
+          <tr>
+            {/*Q3. Below table is just an example. Add more columns based on the traveller attributes you choose.*/}
+            <th style={styles.th}>ID</th>
+            <th style={styles.th}>Name</th>
+            <th style={styles.th}>Phone</th>
+            <th style={styles.th}>Email</th>
+            <th style={styles.th}>Booking Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          {/*Q3. write code to call the JS variable defined at the top of this function to render table rows.*/}
+          {travellers.map((traveller, index) => (
+            <TravellerRow key={index} traveller={traveller} />
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
@@ -160,6 +172,7 @@ class TicketToRide extends React.Component {
           {/*Q2 and Q6. Code to call Instance that draws Homepage. Homepage shows Visual Representation of free seats.*/}
           {this.state.selector === 1 && <Homepage travellers={this.state.travellers} />}
           {/*Q3. Code to call component that Displays Travellers.*/}
+          {this.state.selector === 2 && <Display travellers={this.state.travellers} />}
           
           {/*Q4. Code to call the component that adds a traveller.*/}
           {/*Q5. Code to call the component that deletes a traveller based on a given attribute.*/}
