@@ -145,21 +145,50 @@ class Add extends React.Component {
 
 
 class Delete extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.state = {
+      travellerId: ''
+    };
+
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
+
+  handleChange(e) {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  }
+
   handleSubmit(e) {
     e.preventDefault();
     /*Q5. Fetch the passenger details from the deletion form and call deleteTraveller()*/
+    const { travellerId } = this.state;
+
+    this.props.deleteTraveller(parseInt(travellerId));
+
+    this.setState({ travellerId: '' });
   }
 
   render() {
+    const { travellerId } = this.state;
     return (
-      <form name="deleteTraveller" onSubmit={this.handleSubmit}>
-	    {/*Q5. Placeholder form to enter information on which passenger's ticket needs to be deleted. Below code is just an example.*/}
-	<input type="text" name="travellername" placeholder="Name" />
-        <button>Delete</button>
+      <form name="deleteTraveller" onSubmit={this.handleSubmit} style={styles.form}>
+      {/*Q5. Placeholder form to enter information on which passenger's ticket needs to be deleted. Below code is just an example.*/}
+        <label style={styles.label}>
+          ID to Delete:
+          <input
+            type="number"
+            name="travellerId"
+            value={travellerId}
+            onChange={this.handleChange}
+            placeholder="Enter ID"
+            required
+            style={styles.input}
+          />
+        </label>
+        <br />
+        <button type="submit" style={styles.button}>Delete</button>
       </form>
     );
   }
@@ -244,6 +273,7 @@ class TicketToRide extends React.Component {
           {/*Q4. Code to call the component that adds a traveller.*/}
           {this.state.selector === 3 && <Add bookTraveller={this.bookTraveller} />}
           {/*Q5. Code to call the component that deletes a traveller based on a given attribute.*/}
+          {this.state.selector === 4 && <Delete deleteTraveller={this.deleteTraveller} />}
         </div>
       </div>
     );
