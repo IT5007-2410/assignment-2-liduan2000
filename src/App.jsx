@@ -228,6 +228,7 @@ class TicketToRide extends React.Component {
     this.state = { travellers: [], selector: 1};
     this.bookTraveller = this.bookTraveller.bind(this);
     this.deleteTraveller = this.deleteTraveller.bind(this);
+    this.setSelector = this.setSelector.bind(this);
   }
 
   setSelector(value)
@@ -246,16 +247,55 @@ class TicketToRide extends React.Component {
   }
 
   bookTraveller(passenger) {
-	    /*Q4. Write code to add a passenger to the traveller state variable.*/
+        /*Q4. Write code to add a passenger to the traveller state variable.*/
+      this.setState((prevState) => {
+        if (prevState.travellers.length >= 10) {
+          alert("All seats are booked! Cannot add more travellers.");
+          return null;
+        }
+        const passengerExists = prevState.travellers.some(
+          (traveller) => traveller.name.toLowerCase() === passenger.name.toLowerCase()
+        );
+        if (passengerExists) {
+          alert("This traveller has already been booked!");
+          return null;
+        }
+        const phoneRegex = /^\d+$/;
+        if (!phoneRegex.test(passenger.phone)) {
+          alert("Phone number must be numeric!");
+          return null;
+        }
+        alert("Traveller added successfully!");
+        return {
+          travellers: [...prevState.travellers, passenger],
+        };
+      });
+    }
+
+  deleteTraveller(travellerId) {
+      /*Q5. Write code to delete a passenger from the traveller state variable.*/
+    this.setState((prevState) => {
+      const travellerExists = prevState.travellers.some(
+        (traveller) => traveller.id === travellerId
+      );
+
+      if (!travellerExists) {
+        alert("ID does not exist!");
+        return null;
+      }
+      alert("Traveller deleted successfully!");
+      return {
+        travellers: prevState.travellers.filter(
+          (traveller) => traveller.id !== travellerId
+        ),
+      };
+    });
   }
 
-  deleteTraveller(passenger) {
-	  /*Q5. Write code to delete a passenger from the traveller state variable.*/
-  }
   render() {
     return (
       <div>
-        <h1>Ticket To Ride</h1>
+        <h1 style={styles.title}>Ticket To Ride</h1>
         <div style={styles.navbar}>
           {/*Q2. Code for Navigation bar. Use basic buttons to create a nav bar. Use states to manage selection.*/}
           <button style={styles.navButton} onClick={() => this.setSelector(1)}>Homepage(Free Seats)</button>
@@ -266,13 +306,13 @@ class TicketToRide extends React.Component {
         <div>
           {/*Only one of the below four divisions is rendered based on the button clicked by the user.*/}
           {/*Q2 and Q6. Code to call Instance that draws Homepage. Homepage shows Visual Representation of free seats.*/}
-          {this.state.selector === 1 && <Homepage travellers={this.state.travellers} />}
           {/*Q3. Code to call component that Displays Travellers.*/}
-          {this.state.selector === 2 && <Display travellers={this.state.travellers} />}
           
           {/*Q4. Code to call the component that adds a traveller.*/}
-          {this.state.selector === 3 && <Add bookTraveller={this.bookTraveller} />}
           {/*Q5. Code to call the component that deletes a traveller based on a given attribute.*/}
+          {this.state.selector === 1 && <Homepage travellers={this.state.travellers} />}
+          {this.state.selector === 2 && <Display travellers={this.state.travellers} />}
+          {this.state.selector === 3 && <Add bookTraveller={this.bookTraveller} />}
           {this.state.selector === 4 && <Delete deleteTraveller={this.deleteTraveller} />}
         </div>
       </div>
